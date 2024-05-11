@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "685952864646",
+    "project_id": "fitpal-a88d8",
+    "storage_bucket": "fitpal-a88d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685952864646:android:0b3ec79058b9a415199c07",
+        "android_client_info": {
+          "package_name": "com.example.fitpal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfc6GY5-fl1SUVSw0VcKRK01mMEIkZTgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
