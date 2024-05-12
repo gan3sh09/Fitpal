@@ -1,5 +1,5 @@
 import 'package:fitpal/constraints/constraints.dart';
-import 'package:fitpal/screens/edit_profile_screen.dart';
+import 'package:fitpal/screens/add_goal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -45,7 +45,7 @@ class GoalScreen extends StatelessWidget {
                     child: ElevatedButton(
                         onPressed: () {
                           //* navigate to edit profile screen
-                          Get.to(const EditProfileScreen());
+                          Get.to(const AddGoalScreen());
                         },
                         style: ElevatedButton.styleFrom(
                           foregroundColor: themeColor,
@@ -138,29 +138,129 @@ class GoalScreen extends StatelessWidget {
                     //*  text
                     Container(
                       padding: EdgeInsets.only(left: screenWidth * 0.014),
-                      child: RichText(
-                        text: TextSpan(
-                          style: kTextStyle.textStyle(
-                              fontWeight: FontWeight.w600,
-                              textColor: Colors.black,
-                              textSize: 15),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '🟢 ',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: Colors.black,
-                                  textSize: 12),
-                            ),
-                            TextSpan(
-                                text:
-                                    'Calculate daily calories intake to ensure a surplus for gradual weight gain',
+                      child: Column(
+                        children: [
+                          //*----------first to do list
+                          RichText(
+                            text: TextSpan(
                                 style: kTextStyle.textStyle(
                                     fontWeight: FontWeight.w600,
                                     textColor: Colors.black,
-                                    textSize: 15)),
-                          ],
-                        ),
+                                    textSize: 15),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: '🟢 ',
+                                    style: kTextStyle.textStyle(
+                                        fontWeight: FontWeight.w600,
+                                        textColor: Colors.black,
+                                        textSize: 12),
+                                  ),
+                                  TextSpan(
+                                      text:
+                                          'Calculate daily calories intake to ensure a surplus for gradual weight gain',
+                                      style: kTextStyle.textStyle(
+                                          fontWeight: FontWeight.w600,
+                                          textColor: Colors.black,
+                                          textSize: 15)),
+                                ]),
+                          ),
+                          //*----------second todo list
+                          RichText(
+                            text: TextSpan(
+                                style: kTextStyle.textStyle(
+                                    fontWeight: FontWeight.w600,
+                                    textColor: Colors.black,
+                                    textSize: 15),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: '🟢 ',
+                                    style: kTextStyle.textStyle(
+                                        fontWeight: FontWeight.w600,
+                                        textColor: Colors.black,
+                                        textSize: 12),
+                                  ),
+                                  TextSpan(
+                                      text:
+                                          'Focus on consuming nutrient-dense foods such as lean proteins, complex carbohydrates, healthy fatsm and fruts and vegetables',
+                                      style: kTextStyle.textStyle(
+                                          fontWeight: FontWeight.w600,
+                                          textColor: Colors.black,
+                                          textSize: 15)),
+                                ]),
+                          ),
+                          //*----------third todo list
+                          RichText(
+                            text: TextSpan(
+                                style: kTextStyle.textStyle(
+                                    fontWeight: FontWeight.w600,
+                                    textColor: Colors.black,
+                                    textSize: 15),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: '🟢 ',
+                                    style: kTextStyle.textStyle(
+                                        fontWeight: FontWeight.w600,
+                                        textColor: Colors.black,
+                                        textSize: 12),
+                                  ),
+                                  TextSpan(
+                                      text:
+                                          'Desing a structured workout routine including strength training excercises targeting major muscle groups',
+                                      style: kTextStyle.textStyle(
+                                          fontWeight: FontWeight.w600,
+                                          textColor: Colors.black,
+                                          textSize: 15)),
+                                ]),
+                          ),
+                          //*----------fourth todo list
+                          RichText(
+                            text: TextSpan(
+                                style: kTextStyle.textStyle(
+                                    fontWeight: FontWeight.w600,
+                                    textColor: Colors.black,
+                                    textSize: 15),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: '🟢 ',
+                                    style: kTextStyle.textStyle(
+                                        fontWeight: FontWeight.w600,
+                                        textColor: Colors.black,
+                                        textSize: 12),
+                                  ),
+                                  TextSpan(
+                                      text:
+                                          "Aim for a gradual weight gain of approximately 0.5 kg per week to ensure healthy progress",
+                                      style: kTextStyle.textStyle(
+                                          fontWeight: FontWeight.w600,
+                                          textColor: Colors.black,
+                                          textSize: 15)),
+                                ]),
+                          ),
+                          //*----------fifth todo list
+                          RichText(
+                            text: TextSpan(
+                                style: kTextStyle.textStyle(
+                                    fontWeight: FontWeight.w600,
+                                    textColor: Colors.black,
+                                    textSize: 15),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: '🟢 ',
+                                    style: kTextStyle.textStyle(
+                                        fontWeight: FontWeight.w600,
+                                        textColor: Colors.black,
+                                        textSize: 12),
+                                  ),
+                                  TextSpan(
+                                      text:
+                                          "Listen to your body, prioritize consisentency, and practice patience throughout the process",
+                                      style: kTextStyle.textStyle(
+                                          fontWeight: FontWeight.w600,
+                                          textColor: Colors.black,
+                                          textSize: 15)),
+                                ]),
+                          ),
+                        ],
                       ),
                     ),
                   ],

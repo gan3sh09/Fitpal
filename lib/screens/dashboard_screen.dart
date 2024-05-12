@@ -3,6 +3,7 @@ import 'package:fitpal/screens/NutritionTrackerScreen.dart';
 import 'package:fitpal/screens/edit_profile_screen.dart';
 import 'package:fitpal/screens/exercise_log_screen.dart';
 import 'package:fitpal/screens/goal_screen.dart';
+import 'package:fitpal/screens/join_community_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,9 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const NutritionTrackerScreen(),
     const ExerciseLogScreen(),
     const GoalScreen(),
-    Container(
-      child: Text("page 5"),
-    ),
+    const JoinCommunityScreen()
 
     //const UserForm(),
   ];
