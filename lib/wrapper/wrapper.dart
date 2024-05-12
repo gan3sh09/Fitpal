@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitpal/constants/colors.dart';
-import 'package:fitpal/screens/dashboard_screen/dashboard_screen.dart';
 import 'package:fitpal/screens/login_screen/login_screen.dart';
+import 'package:fitpal/screens/navigation_screen/navigation_screen.dart';
 import 'package:flutter/material.dart';
 
 class Wrapper extends StatelessWidget {
@@ -27,7 +27,7 @@ class Wrapper extends StatelessWidget {
               ),
             );
           } else if (snapshot.hasData) {
-            return const DashboardScreen();
+            return const NavigationScreen();
           } else {
             return const LoginScreen();
           }

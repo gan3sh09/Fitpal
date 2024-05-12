@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitpal/Controller/signupin_controller.dart';
 import 'package:fitpal/constants/colors.dart';
 import 'package:fitpal/constants/sizes.dart';
-import 'package:fitpal/screens/dashboard_screen/dashboard_screen.dart';
+import 'package:fitpal/screens/navigation_screen/navigation_screen.dart';
 import 'package:fitpal/screens/signup_screen/signup_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -188,7 +188,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
       print('Login sucessfully');
 
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => const DashboardScreen(),
+        builder: (context) => const NavigationScreen(),
       ));
     } else {
       print('some error occured.');
