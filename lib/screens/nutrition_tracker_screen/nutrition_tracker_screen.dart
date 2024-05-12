@@ -40,8 +40,6 @@ class NutritionTrackerScreen extends StatelessWidget {
               horizontal: screenWidth * 0.03, vertical: screenHeight * 0.005),
           child: Column(
             children: [
-              //* Row for title and edit button
-              //* Edit elevated button
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
