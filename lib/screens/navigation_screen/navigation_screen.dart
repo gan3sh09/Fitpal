@@ -4,6 +4,7 @@ import 'package:fitpal/constants/constraints.dart';
 import 'package:fitpal/screens/dashboard_screen/dashboard_screen.dart';
 import 'package:fitpal/screens/exercise_log_screen/exercise_log_screen.dart';
 import 'package:fitpal/screens/goal_screen/goal_screen.dart';
+import 'package:fitpal/screens/social_screen/social_screen.dart';
 import 'package:fitpal/screens/nutrition_tracker_screen/nutrition_tracker_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -25,11 +26,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
     const NutritionTrackerScreen(),
     const ExerciseLogScreen(),
     const GoalScreen(),
-    const Center(
-      child: Text("page 5"),
-    ),
-
-    //const UserForm(),
+    const SocialScreen(),
   ];
   @override
   Widget build(BuildContext context) {

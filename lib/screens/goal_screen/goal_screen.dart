@@ -1,7 +1,9 @@
+import 'package:fitpal/Controller/logout_controller.dart';
 import 'package:fitpal/constants/colors.dart';
 import 'package:fitpal/constants/constraints.dart';
 import 'package:fitpal/constants/image_strings.dart';
 import 'package:fitpal/screens/edit_profile_screen/edit_profile_screen.dart';
+import 'package:fitpal/screens/login_screen/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class GoalScreen extends StatelessWidget {
@@ -26,13 +28,93 @@ class GoalScreen extends StatelessWidget {
         ),
         backgroundColor: primaryColor,
         actions: [
-          IconButton(
-            onPressed: () {},
+          PopupMenuButton(
             icon: const Icon(
               Icons.more_vert,
               color: whiteColor,
             ),
-          )
+            onSelected: (value) {
+              print(value);
+            },
+            itemBuilder: ((BuildContext context) {
+              return [
+                PopupMenuItem(
+                  value: 1,
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Logout'),
+                          content:
+                              const Text('Are you sure you want to log out?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pop(false); // No button pressed
+                              },
+                              child: const Text(
+                                'No',
+                                style: TextStyle(
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pop(true); // Yes button pressed
+                              },
+                              child: const Text(
+                                'Yes',
+                                style: TextStyle(
+                                  color: primaryColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ).then((value) {
+                      if (value != null && value) {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: primaryColor,
+                              ),
+                            );
+                          },
+                        );
+
+                        // User confirmed logout, perform logout action
+                        logOut();
+
+                        Navigator.pop(context);
+
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        );
+                      }
+                    });
+                  },
+                  child: const Text(
+                    'Logout',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
+                    ),
+                  ),
+                )
+              ];
+            }),
+          ),
         ],
       ),
       body: SingleChildScrollView(

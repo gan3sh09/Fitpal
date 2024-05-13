@@ -1,14 +1,14 @@
 import 'package:fitpal/Controller/logout_controller.dart';
-import 'package:fitpal/common_widget/nutrition_tracker_text.dart';
 import 'package:fitpal/constants/colors.dart';
 import 'package:fitpal/constants/constraints.dart';
 import 'package:fitpal/constants/image_strings.dart';
-import 'package:fitpal/screens/exercise_log_screen/layout/add_exercise_log_screen.dart';
 import 'package:fitpal/screens/login_screen/login_screen.dart';
+import 'package:fitpal/screens/social_screen/layout/event_screen.dart';
+import 'package:fitpal/screens/social_screen/layout/join_community_screen.dart';
 import 'package:flutter/material.dart';
 
-class ExerciseLogScreen extends StatelessWidget {
-  const ExerciseLogScreen({super.key});
+class SocialScreen extends StatelessWidget {
+  const SocialScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class ExerciseLogScreen extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text(
-          'Exercise Log',
+          'Social',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -121,128 +121,102 @@ class ExerciseLogScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: screenWidth * 0.03,
-            vertical: screenHeight * 0.005,
-          ),
+              horizontal: screenWidth * 0.03, vertical: screenHeight * 0.005),
           child: Column(
             children: [
-              //*title of the screen
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Image(
                     image: const AssetImage(logoImage),
                     height: size.height * 0.08,
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      //* navigate to Add Nutrition screen
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const AddExerciseLogScreen(),
-                      ));
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: themeColor,
-                      backgroundColor: primaryColor,
-
-                      elevation: 5, // Button elevation
-                      padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth * 0.015,
-                          vertical: screenHeight * 0.008), // Button padding
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(15), // Button border radius
-                      ),
-                    ),
-                    child: Text(
-                      "Add",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w700,
-                          textColor: whiteColor,
-                          textSize: 16),
-                    ),
-                  ),
                 ],
               ),
 
-              SizedBox(
-                height: screenHeight * 0.01,
+              //* community group image
+              Container(
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                height: screenHeight * 0.3,
+                width: double.infinity,
+                child: Image.asset("assets/images/gym_group.png"),
               ),
-              //* user name
-              Align(
-                alignment: Alignment.topLeft,
+              //* join out community  text button
+              /* GestureDetector(
+                onTap: () {},
                 child: Text(
-                  "Summary",
+                  "Join our Community",
                   style: kTextStyle.textStyle(
                     fontWeight: FontWeight.bold,
-                    textColor: darkTextColor,
-                    textSize: 17,
+                    textColor: themeColor,
+                    textSize: 16,
+                  ),
+                ),
+              ), */
+              ElevatedButton(
+                onPressed: () {
+                  //* navigate to Add Nutrition screen
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const JoinCommunityScreen(),
+                  ));
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: themeColor,
+                  backgroundColor: primaryColor,
+
+                  elevation: 5, // Button elevation
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.015,
+                      vertical: screenHeight * 0.008), // Button padding
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(12), // Button border radius
+                  ),
+                ),
+                child: Text(
+                  "Join Our Community",
+                  style: kTextStyle.textStyle(
+                    textColor: whiteColor,
+                    textSize: 16,
                   ),
                 ),
               ),
-              SizedBox(
-                height: screenHeight * 0.004,
-              ),
-              //*user current status
               Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.03,
-                    vertical: screenWidth * 0.02),
-                height: screenHeight,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                height: screenHeight * 0.3,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: containerColor,
-                ),
-                child: ListView.builder(
-                    itemCount: 7,
-                    itemBuilder: (BuildContext context, index) {
-                      return const ListTile(
-                        title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            //*date  text
-                            NutritionTrackerText(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                              text: "Date: 04/04/2024",
-                              textColor: darkTextColor,
-                            ),
-                            //*duration  text
-                            NutritionTrackerText(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                              text: "Duration: 90 minutes",
-                              textColor: darkTextColor,
-                            ),
-                            //*workout type text
-                            NutritionTrackerText(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                              text: "Workout Type: Full Body",
-                              textColor: darkTextColor,
-                            ),
-
-                            //*Total calories consumed  text --------------------
-
-                            NutritionTrackerText(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                              text: "Total calories consumed : 105",
-                              textColor: primaryColor,
-                            ),
-                            //*Calories burnt text
-                            Divider(
-                              thickness: 2,
-                              color: Color(0xff9394a5),
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
+                child: Image.asset("assets/images/join_event.jpg"),
               ),
+              ElevatedButton(
+                onPressed: () {
+                  //* navigate to Add Nutrition screen
+                  Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const EventScreen(),
+                      ));
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: themeColor,
+                  backgroundColor: primaryColor,
 
-//*goal   section ---------------------------------------------------------------
+                  elevation: 5, // Button elevation
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.015,
+                      vertical: screenHeight * 0.008), // Button padding
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(12), // Button border radius
+                  ),
+                ),
+                child: Text(
+                  "Events",
+                  style: kTextStyle.textStyle(
+                    textColor: whiteColor,
+                    textSize: 16,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

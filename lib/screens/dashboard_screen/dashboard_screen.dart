@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:fitpal/Controller/logout_controller.dart';
 import 'package:fitpal/constants/colors.dart';
 import 'package:fitpal/constants/constraints.dart';
@@ -28,38 +30,93 @@ class DashboardScreen extends StatelessWidget {
         ),
         backgroundColor: primaryColor,
         actions: [
-          TextButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  barrierDismissible:
-                      false, // Prevents dismissing dialog by tapping outside
-                  builder: (BuildContext context) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: primaryColor,
-                      ),
-                    );
-                  },
-                );
+          PopupMenuButton(
+            icon: const Icon(
+              Icons.more_vert,
+              color: whiteColor,
+            ),
+            onSelected: (value) {
+              print(value);
+            },
+            itemBuilder: ((BuildContext context) {
+              return [
+                PopupMenuItem(
+                  value: 1,
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Logout'),
+                          content:
+                              const Text('Are you sure you want to log out?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pop(false); // No button pressed
+                              },
+                              child: const Text(
+                                'No',
+                                style: TextStyle(
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pop(true); // Yes button pressed
+                              },
+                              child: const Text(
+                                'Yes',
+                                style: TextStyle(
+                                  color: primaryColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ).then((value) {
+                      if (value != null && value) {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: primaryColor,
+                              ),
+                            );
+                          },
+                        );
 
-                // Simulate a delay of 3 seconds before navigating
-                Future.delayed(const Duration(seconds: 1), () {
-                  Navigator.pop(context); // Close the dialog
-                  logOut();
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const LoginScreen(),
-                  )); // Navigate to login screen
-                });
-              },
-              child: const Text(
-                'Logout',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.red,
-                ),
-              ))
+                        // User confirmed logout, perform logout action
+                        logOut();
+
+                        Navigator.pop(context);
+
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        );
+                      }
+                    });
+                  },
+                  child: const Text(
+                    'Logout',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
+                    ),
+                  ),
+                )
+              ];
+            }),
+          ),
         ],
       ),
       body: SingleChildScrollView(
