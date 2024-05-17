@@ -1,18 +1,18 @@
-import 'package:fitpal/screens/exercise_log_screen/layout/add_exercise_log_function.dart';
+import 'package:fitpal/screens/goal_screen/set_goal_function.dart';
 import 'package:flutter/material.dart';
 
-class AddExerciseLogScreen extends StatefulWidget {
-  const AddExerciseLogScreen({super.key});
+class SetGoalScreen extends StatefulWidget {
+  const SetGoalScreen({super.key});
 
   @override
-  State<AddExerciseLogScreen> createState() => _AddExerciseLogScreenState();
+  State<SetGoalScreen> createState() => _SetGoalScreenState();
 }
 
-class _AddExerciseLogScreenState extends State<AddExerciseLogScreen> {
+class _SetGoalScreenState extends State<SetGoalScreen> {
   TextEditingController dateController = TextEditingController();
   TextEditingController durationController = TextEditingController();
-  TextEditingController intensityController = TextEditingController();
-  TextEditingController workoutTypeController = TextEditingController();
+  TextEditingController currentWeightController = TextEditingController();
+  TextEditingController targettWeightController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class _AddExerciseLogScreenState extends State<AddExerciseLogScreen> {
           ),
         ),
         title: const Text(
-          "Add Exercise Log",
+          "Set Goal",
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w200,
@@ -91,10 +91,10 @@ class _AddExerciseLogScreenState extends State<AddExerciseLogScreen> {
               SizedBox(
                 height: screenHeight * 0.005,
               ),
-              //* intensity  textform field
+              //* current weight  textform field
 
               const Text(
-                "Intensity",
+                "Current weight",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
@@ -103,7 +103,7 @@ class _AddExerciseLogScreenState extends State<AddExerciseLogScreen> {
               ),
 
               TextFormField(
-                controller: intensityController,
+                controller: currentWeightController,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 keyboardType: TextInputType.name,
                 decoration: const InputDecoration(),
@@ -111,9 +111,9 @@ class _AddExerciseLogScreenState extends State<AddExerciseLogScreen> {
               SizedBox(
                 height: screenHeight * 0.005,
               ),
-              //* workout type  textform field
+              //* Target weight  textform field
               const Text(
-                "Workout type",
+                "Target weight",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
@@ -122,7 +122,7 @@ class _AddExerciseLogScreenState extends State<AddExerciseLogScreen> {
               ),
 
               TextFormField(
-                controller: workoutTypeController,
+                controller: targettWeightController,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 keyboardType: TextInputType.name,
                 decoration: const InputDecoration(),
@@ -137,15 +137,15 @@ class _AddExerciseLogScreenState extends State<AddExerciseLogScreen> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      addExerciseLog(
+                      setGoal(
                         context,
                         dateController,
                         durationController,
-                        intensityController,
-                        workoutTypeController,
+                        currentWeightController,
+                        targettWeightController,
                       );
                     },
-                    child: const Text('Create'),
+                    child: const Text('Set goal'),
                   ),
                 ),
               ),

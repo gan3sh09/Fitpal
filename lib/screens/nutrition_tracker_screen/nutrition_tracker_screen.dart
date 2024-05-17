@@ -1,10 +1,9 @@
 // ignore_for_file: avoid_print
 
-import 'package:fitpal/Controller/logout_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitpal/constants/colors.dart';
 import 'package:fitpal/constants/constraints.dart';
 import 'package:fitpal/constants/image_strings.dart';
-import 'package:fitpal/screens/login_screen/login_screen.dart';
 import 'package:fitpal/screens/nutrition_tracker_screen/layout/add_nutrition.dart';
 import 'package:flutter/material.dart';
 
@@ -28,95 +27,6 @@ class NutritionTrackerScreen extends StatelessWidget {
           ),
         ),
         backgroundColor: primaryColor,
-        actions: [
-          PopupMenuButton(
-            icon: const Icon(
-              Icons.more_vert,
-              color: whiteColor,
-            ),
-            onSelected: (value) {
-              print(value);
-            },
-            itemBuilder: ((BuildContext context) {
-              return [
-                PopupMenuItem(
-                  value: 1,
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Logout'),
-                          content:
-                              const Text('Are you sure you want to log out?'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context)
-                                    .pop(false); // No button pressed
-                              },
-                              child: const Text(
-                                'No',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context)
-                                    .pop(true); // Yes button pressed
-                              },
-                              child: const Text(
-                                'Yes',
-                                style: TextStyle(
-                                  color: primaryColor,
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ).then((value) {
-                      if (value != null && value) {
-                        showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext context) {
-                            return const Center(
-                              child: CircularProgressIndicator(
-                                color: primaryColor,
-                              ),
-                            );
-                          },
-                        );
-
-                        // User confirmed logout, perform logout action
-                        logOut();
-
-                        Navigator.pop(context);
-
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
-                          ),
-                        );
-                      }
-                    });
-                  },
-                  child: const Text(
-                    'Logout',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                    ),
-                  ),
-                )
-              ];
-            }),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -180,209 +90,101 @@ class NutritionTrackerScreen extends StatelessWidget {
                 height: screenHeight * 0.004,
               ),
               //*user current status
-              Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.03,
-                    vertical: screenWidth * 0.02),
-                height: screenHeight * 0.24,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color(0xFFe4e5f1),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Date: 12/05/2024",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    Text(
-                      "Entry Number: 1",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    Text(
-                      "Food Name: Egg white",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    Text(
-                      "Calories: 45",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    Text(
-                      "Entry Number: 2",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    Text(
-                      "Food Name: Banana",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    Text(
-                      "Calories: 60",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    Text(
-                      "Total Calories Consumed: 105",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.bold,
-                          textColor: primaryColor,
-                          textSize: 17),
-                    ),
-                  ],
-                ),
+              //* ------------------------------------------------------------------------
+              StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("nutrition_info")
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data == null) {
+                    return const Center(child: Text('No users found'));
+                  } else {
+                    List<DocumentSnapshot> nutrition = snapshot.data!.docs;
+                    return SingleChildScrollView(
+                      child: Container(
+                        height: screenHeight * 0.9,
+                        child: ListView.builder(
+                            itemCount: nutrition.length,
+                            itemBuilder: (cotext, index) {
+                              Map<String, dynamic> nutrition_info =
+                                  nutrition[index].data()
+                                      as Map<String, dynamic>;
+
+                              return Expanded(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: screenWidth * 0.03,
+                                          vertical: screenWidth * 0.02),
+                                      height: screenHeight * 0.15,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color:
+                                            Color.fromARGB(255, 211, 212, 217),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Date: ${nutrition_info["date"]} ",
+                                            style: kTextStyle.textStyle(
+                                                fontWeight: FontWeight.w600,
+                                                textColor: darkTextColor,
+                                                textSize: 15),
+                                          ),
+                                          Text(
+                                            "Entry Number: ${nutrition_info["entry_number"]}",
+                                            style: kTextStyle.textStyle(
+                                                fontWeight: FontWeight.w600,
+                                                textColor: darkTextColor,
+                                                textSize: 15),
+                                          ),
+                                          Text(
+                                            "Food Name:  ${nutrition_info["food_name"]}",
+                                            style: kTextStyle.textStyle(
+                                                fontWeight: FontWeight.w600,
+                                                textColor: darkTextColor,
+                                                textSize: 15),
+                                          ),
+                                          Text(
+                                            "Nutrition intake:  ${nutrition_info["nutrition_intake"]}",
+                                            style: kTextStyle.textStyle(
+                                                fontWeight: FontWeight.w600,
+                                                textColor: darkTextColor,
+                                                textSize: 15),
+                                          ),
+                                          Text(
+                                            "Total Calories Consumed: ${nutrition_info["calories_consumed"]}",
+                                            style: kTextStyle.textStyle(
+                                                fontWeight: FontWeight.bold,
+                                                textColor: primaryColor,
+                                                textSize: 17),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: screenHeight * 0.005,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                      ),
+                    );
+                  }
+                },
               ),
-              SizedBox(
-                height: screenHeight * 0.008,
-              ),
-              //*goal   section ---------------------------------------------------------------
-              Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.03,
-                    vertical: screenWidth * 0.02),
-                height: screenHeight * 0.24,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color(0xFFe4e5f1),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Date: 11/05/2024",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    Text(
-                      "Entry Number: 1",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    Text(
-                      "Food Name: Oats",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    Text(
-                      "Calories: 50",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    Text(
-                      "Entry Number: 2",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    Text(
-                      "Food Name: Boiled Chicken",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    Text(
-                      "Calories: 450",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    Text(
-                      "Total Calories Consumed: 500",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.bold,
-                          textColor: primaryColor,
-                          textSize: 17),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: screenHeight * 0.008,
-              ),
-              //*today's workout plan   section ---------------------------------------------------------------
-              Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.03,
-                    vertical: screenWidth * 0.02),
-                height: screenHeight * 0.16,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color(0xFFe4e5f1),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Date: 10/05/2024",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    Text(
-                      "Entry Number: 1",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    Text(
-                      "Food Name: Boiled Egg",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    Text(
-                      "Calories: 100",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    Text(
-                      "Total Calories Consumed: 100",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.bold,
-                          textColor: primaryColor,
-                          textSize: 17),
-                    ),
-                  ],
-                ),
-              ),
+              //* ------------------------------------------------------------------------
             ],
           ),
         ),

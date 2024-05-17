@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_final_fields
 
+import 'package:fitpal/screens/nutrition_tracker_screen/layout/add_nutrition_function.dart';
 import 'package:flutter/material.dart';
 
 class AddNutritionScreen extends StatefulWidget {
@@ -10,10 +11,11 @@ class AddNutritionScreen extends StatefulWidget {
 }
 
 class _AddNutritionScreenState extends State<AddNutritionScreen> {
-  TextEditingController _datePicker = TextEditingController();
-  TextEditingController _entryNumber = TextEditingController();
-  TextEditingController _foodName = TextEditingController();
-  TextEditingController _nutritionIntake = TextEditingController();
+  TextEditingController datePicker = TextEditingController();
+  TextEditingController entryNumber = TextEditingController();
+  TextEditingController foodName = TextEditingController();
+  TextEditingController nutritionIntake = TextEditingController();
+  TextEditingController caloriesConsumed = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,7 @@ class _AddNutritionScreenState extends State<AddNutritionScreen> {
               children: [
                 //* textform fields starts from heree --------------------------------
 
-                //* First name textform field
+                //* date textform field
                 const Text(
                   "Date",
                   style: TextStyle(
@@ -62,7 +64,7 @@ class _AddNutritionScreenState extends State<AddNutritionScreen> {
                   keyboardType: TextInputType.name,
                 ), */
                 TextField(
-                  controller: _datePicker,
+                  controller: datePicker,
                   decoration: const InputDecoration(
                     filled: true,
                   ),
@@ -76,7 +78,7 @@ class _AddNutritionScreenState extends State<AddNutritionScreen> {
                   height: screenHeight * 0.005,
                 ),
 
-                //* last name textform field
+                //* entry textform field
                 const Text(
                   "Entry Number",
                   style: TextStyle(
@@ -91,15 +93,15 @@ class _AddNutritionScreenState extends State<AddNutritionScreen> {
                   keyboardType: TextInputType.name,
                 ), */
                 TextFormField(
-                  controller: _entryNumber,
+                  controller: entryNumber,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.name,
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(),
                 ),
                 SizedBox(
                   height: screenHeight * 0.005,
                 ),
-                //* mobile  textform field
+                //* food name textform field
                 const Text(
                   "Food Name",
                   style: TextStyle(
@@ -114,7 +116,7 @@ class _AddNutritionScreenState extends State<AddNutritionScreen> {
                   keyboardType: TextInputType.number,
                 ), */
                 TextFormField(
-                  controller: _foodName,
+                  controller: foodName,
                   keyboardType: TextInputType.phone,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: const InputDecoration(),
@@ -122,7 +124,7 @@ class _AddNutritionScreenState extends State<AddNutritionScreen> {
                 SizedBox(
                   height: screenHeight * 0.005,
                 ),
-                //* current height  textform field
+                //* calories  textform field
                 const Text(
                   "Nutrition Intake",
                   style: TextStyle(
@@ -132,12 +134,24 @@ class _AddNutritionScreenState extends State<AddNutritionScreen> {
                   ),
                 ),
 
-                /* CustomTextFormField(
-                  controller: heightController,
-                  keyboardType: TextInputType.number,
-                ), */
                 TextFormField(
-                  controller: _nutritionIntake,
+                  controller: nutritionIntake,
+                  keyboardType: TextInputType.number,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: const InputDecoration(),
+                ),
+                //* total calories consumed   textform field
+                const Text(
+                  "Calories Consumed",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black87,
+                  ),
+                ),
+
+                TextFormField(
+                  controller: caloriesConsumed,
                   keyboardType: TextInputType.number,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: const InputDecoration(),
@@ -150,7 +164,23 @@ class _AddNutritionScreenState extends State<AddNutritionScreen> {
                   child: SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        //             addExerciseLog(
+                        //   context,
+                        //   dateController,
+                        //   durationController,
+                        //   intensityController,
+                        //   workoutTypeController,
+                        // );
+                        addNutrition(
+                          context,
+                          datePicker,
+                          entryNumber,
+                          foodName,
+                          nutritionIntake,
+                          caloriesConsumed,
+                        );
+                      },
                       child: const Text('Add'),
                     ),
                   ),
@@ -173,7 +203,7 @@ class _AddNutritionScreenState extends State<AddNutritionScreen> {
 
     if (picked != null) {
       setState(() {
-        _datePicker.text = picked.toString().split(" ")[0];
+        datePicker.text = picked.toString().split(" ")[0];
       });
     }
   }

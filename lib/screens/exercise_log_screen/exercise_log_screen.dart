@@ -1,10 +1,8 @@
-import 'package:fitpal/Controller/logout_controller.dart';
-import 'package:fitpal/common_widget/nutrition_tracker_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitpal/constants/colors.dart';
 import 'package:fitpal/constants/constraints.dart';
 import 'package:fitpal/constants/image_strings.dart';
 import 'package:fitpal/screens/exercise_log_screen/layout/add_exercise_log_screen.dart';
-import 'package:fitpal/screens/login_screen/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class ExerciseLogScreen extends StatelessWidget {
@@ -28,95 +26,6 @@ class ExerciseLogScreen extends StatelessWidget {
           ),
         ),
         backgroundColor: primaryColor,
-        actions: [
-          PopupMenuButton(
-            icon: const Icon(
-              Icons.more_vert,
-              color: whiteColor,
-            ),
-            onSelected: (value) {
-              print(value);
-            },
-            itemBuilder: ((BuildContext context) {
-              return [
-                PopupMenuItem(
-                  value: 1,
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Logout'),
-                          content:
-                              const Text('Are you sure you want to log out?'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context)
-                                    .pop(false); // No button pressed
-                              },
-                              child: const Text(
-                                'No',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context)
-                                    .pop(true); // Yes button pressed
-                              },
-                              child: const Text(
-                                'Yes',
-                                style: TextStyle(
-                                  color: primaryColor,
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ).then((value) {
-                      if (value != null && value) {
-                        showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext context) {
-                            return const Center(
-                              child: CircularProgressIndicator(
-                                color: primaryColor,
-                              ),
-                            );
-                          },
-                        );
-
-                        // User confirmed logout, perform logout action
-                        logOut();
-
-                        Navigator.pop(context);
-
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
-                          ),
-                        );
-                      }
-                    });
-                  },
-                  child: const Text(
-                    'Logout',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                    ),
-                  ),
-                )
-              ];
-            }),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -183,64 +92,94 @@ class ExerciseLogScreen extends StatelessWidget {
               SizedBox(
                 height: screenHeight * 0.004,
               ),
-              //*user current status
-              Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.03,
-                    vertical: screenWidth * 0.02),
-                height: screenHeight,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: containerColor,
-                ),
-                child: ListView.builder(
-                    itemCount: 7,
-                    itemBuilder: (BuildContext context, index) {
-                      return const ListTile(
-                        title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            //*date  text
-                            NutritionTrackerText(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                              text: "Date: 04/04/2024",
-                              textColor: darkTextColor,
-                            ),
-                            //*duration  text
-                            NutritionTrackerText(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                              text: "Duration: 90 minutes",
-                              textColor: darkTextColor,
-                            ),
-                            //*workout type text
-                            NutritionTrackerText(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                              text: "Workout Type: Full Body",
-                              textColor: darkTextColor,
-                            ),
+              //*Exercise Log details ------------------------------------------------
+              StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("exercise_log_info")
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data == null) {
+                    return const Center(child: Text('No users found'));
+                  } else {
+                    List<DocumentSnapshot> exercise_log = snapshot.data!.docs;
+                    return SingleChildScrollView(
+                      child: Container(
+                        height: screenHeight * 0.9,
+                        child: ListView.builder(
+                            itemCount: exercise_log.length,
+                            itemBuilder: (cotext, index) {
+                              Map<String, dynamic> exercise_log_info =
+                                  exercise_log[index].data()
+                                      as Map<String, dynamic>;
 
-                            //*Total calories consumed  text --------------------
-
-                            NutritionTrackerText(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                              text: "Total calories consumed : 105",
-                              textColor: primaryColor,
-                            ),
-                            //*Calories burnt text
-                            Divider(
-                              thickness: 2,
-                              color: Color(0xff9394a5),
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
+                              return Expanded(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: screenWidth * 0.03,
+                                          vertical: screenWidth * 0.02),
+                                      height: screenHeight * 0.15,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color:
+                                            Color.fromARGB(255, 211, 212, 217),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Date: ${exercise_log_info["date"]} ",
+                                            style: kTextStyle.textStyle(
+                                                fontWeight: FontWeight.w600,
+                                                textColor: darkTextColor,
+                                                textSize: 15),
+                                          ),
+                                          Text(
+                                            "Duration: ${exercise_log_info["duration"]}",
+                                            style: kTextStyle.textStyle(
+                                                fontWeight: FontWeight.w600,
+                                                textColor: darkTextColor,
+                                                textSize: 15),
+                                          ),
+                                          Text(
+                                            "Intensity:  ${exercise_log_info["intensity"]}",
+                                            style: kTextStyle.textStyle(
+                                                fontWeight: FontWeight.w600,
+                                                textColor: darkTextColor,
+                                                textSize: 15),
+                                          ),
+                                          Text(
+                                            "Workout Type:  ${exercise_log_info["workout_type"]}",
+                                            style: kTextStyle.textStyle(
+                                                fontWeight: FontWeight.w600,
+                                                textColor: darkTextColor,
+                                                textSize: 15),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: screenHeight * 0.005,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                      ),
+                    );
+                  }
+                },
               ),
+              //*Exercise Log details ------------------------------------------------
 
 //*goal   section ---------------------------------------------------------------
             ],

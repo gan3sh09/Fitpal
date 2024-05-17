@@ -47,28 +47,29 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBux_6QJksL6XenlcC6B5GCaEwvUaY_VfQ',
-    appId: '1:685952864646:web:ac12136d1f226b51199c07',
-    messagingSenderId: '685952864646',
-    projectId: 'fitpal-a88d8',
-    authDomain: 'fitpal-a88d8.firebaseapp.com',
-    storageBucket: 'fitpal-a88d8.appspot.com',
+    apiKey: 'AIzaSyDwyv9LPy4y5z0P0Xi7In1LUAbMQ3JVgU8',
+    appId: '1:258046168427:web:c91b2c8c87df1c8e99902e',
+    messagingSenderId: '258046168427',
+    projectId: 'fitpal-97ceb',
+    authDomain: 'fitpal-97ceb.firebaseapp.com',
+    storageBucket: 'fitpal-97ceb.appspot.com',
+    measurementId: 'G-YY7FCZYLH4',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAfc6GY5-fl1SUVSw0VcKRK01mMEIkZTgs',
-    appId: '1:685952864646:android:0b3ec79058b9a415199c07',
-    messagingSenderId: '685952864646',
-    projectId: 'fitpal-a88d8',
-    storageBucket: 'fitpal-a88d8.appspot.com',
+    apiKey: 'AIzaSyCGZWdB5BUEdXX_3LYScPaKOSm6CC5zrBI',
+    appId: '1:258046168427:android:0b3803e3c314489f99902e',
+    messagingSenderId: '258046168427',
+    projectId: 'fitpal-97ceb',
+    storageBucket: 'fitpal-97ceb.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyByWhxXmB2y2ZiwrcpnTpRkQrW1HyQTI9U',
-    appId: '1:685952864646:ios:b255801b7fdcd0a1199c07',
-    messagingSenderId: '685952864646',
-    projectId: 'fitpal-a88d8',
-    storageBucket: 'fitpal-a88d8.appspot.com',
+    apiKey: 'AIzaSyCN_OLYHHGfsy1DaUiJi8rYUB5F9YRhUWQ',
+    appId: '1:258046168427:ios:67c04ce47bd5217a99902e',
+    messagingSenderId: '258046168427',
+    projectId: 'fitpal-97ceb',
+    storageBucket: 'fitpal-97ceb.appspot.com',
     iosBundleId: 'com.example.fitpal',
   );
 }

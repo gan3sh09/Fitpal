@@ -1,9 +1,8 @@
-import 'package:fitpal/Controller/logout_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitpal/constants/colors.dart';
 import 'package:fitpal/constants/constraints.dart';
 import 'package:fitpal/constants/image_strings.dart';
-import 'package:fitpal/screens/edit_profile_screen/edit_profile_screen.dart';
-import 'package:fitpal/screens/login_screen/login_screen.dart';
+import 'package:fitpal/screens/goal_screen/set_goal_screen.dart';
 import 'package:flutter/material.dart';
 
 class GoalScreen extends StatelessWidget {
@@ -27,95 +26,6 @@ class GoalScreen extends StatelessWidget {
           ),
         ),
         backgroundColor: primaryColor,
-        actions: [
-          PopupMenuButton(
-            icon: const Icon(
-              Icons.more_vert,
-              color: whiteColor,
-            ),
-            onSelected: (value) {
-              print(value);
-            },
-            itemBuilder: ((BuildContext context) {
-              return [
-                PopupMenuItem(
-                  value: 1,
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Logout'),
-                          content:
-                              const Text('Are you sure you want to log out?'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context)
-                                    .pop(false); // No button pressed
-                              },
-                              child: const Text(
-                                'No',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context)
-                                    .pop(true); // Yes button pressed
-                              },
-                              child: const Text(
-                                'Yes',
-                                style: TextStyle(
-                                  color: primaryColor,
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ).then((value) {
-                      if (value != null && value) {
-                        showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext context) {
-                            return const Center(
-                              child: CircularProgressIndicator(
-                                color: primaryColor,
-                              ),
-                            );
-                          },
-                        );
-
-                        // User confirmed logout, perform logout action
-                        logOut();
-
-                        Navigator.pop(context);
-
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
-                          ),
-                        );
-                      }
-                    });
-                  },
-                  child: const Text(
-                    'Logout',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                    ),
-                  ),
-                )
-              ];
-            }),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -138,7 +48,7 @@ class GoalScreen extends StatelessWidget {
                     onPressed: () {
                       //* navigate to Add Nutrition screen
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const EditProfileScreen(),
+                        builder: (context) => const SetGoalScreen(),
                       ));
                     },
                     style: ElevatedButton.styleFrom(
@@ -173,6 +83,93 @@ class GoalScreen extends StatelessWidget {
                 height: screenHeight * 0.004,
               ),
               //*user current status
+              //* Stremabuilder ----------------------------------------------------------------------
+              StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("goal_info")
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data == null) {
+                    return const Center(child: Text('No data found'));
+                  } else {
+                    List<DocumentSnapshot> goal = snapshot.data!.docs;
+                    return SingleChildScrollView(
+                      child: Container(
+                        height: screenHeight * 0.9,
+                        child: ListView.builder(
+                            itemCount: goal.length,
+                            itemBuilder: (cotext, index) {
+                              Map<String, dynamic> goalInfo =
+                                  goal[index].data() as Map<String, dynamic>;
+
+                              return Expanded(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: screenWidth * 0.03,
+                                          vertical: screenWidth * 0.02),
+                                      height: screenHeight * 0.15,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color:
+                                            Color.fromARGB(255, 211, 212, 217),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Date: ${goalInfo["date"]} ",
+                                            style: kTextStyle.textStyle(
+                                                fontWeight: FontWeight.w600,
+                                                textColor: darkTextColor,
+                                                textSize: 15),
+                                          ),
+                                          Text(
+                                            "Duration: ${goalInfo["duration"]}",
+                                            style: kTextStyle.textStyle(
+                                                fontWeight: FontWeight.w600,
+                                                textColor: darkTextColor,
+                                                textSize: 15),
+                                          ),
+                                          Text(
+                                            "Current Weight:  ${goalInfo["current_weight"]}",
+                                            style: kTextStyle.textStyle(
+                                                fontWeight: FontWeight.w600,
+                                                textColor: darkTextColor,
+                                                textSize: 15),
+                                          ),
+                                          Text(
+                                            "Target weight:  ${goalInfo["target_weight"]}",
+                                            style: kTextStyle.textStyle(
+                                                fontWeight: FontWeight.w600,
+                                                textColor: darkTextColor,
+                                                textSize: 15),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: screenHeight * 0.005,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                      ),
+                    );
+                  }
+                },
+              ),
+              //* Stremabuilder ----------------------------------------------------------------------
               Container(
                 padding: EdgeInsets.symmetric(
                     horizontal: screenWidth * 0.03,
