@@ -2,6 +2,50 @@
 
 A new Flutter project.
 
+## join Event
+```bash
+bool _follow = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFollowState();
+  }
+
+  _loadFollowState() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      // Use 'follow' as a key to store and fetch the boolean value
+      _follow = prefs.getBool('follow') ?? true; // Default to true if not set
+    });
+  }
+
+  _saveFollowState(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('follow', value);
+  }
+
+
+Text(
+_follow ? 'Blogs' : 'Following',
+style: const TextStyle(
+color: whiteColor,
+fontSize: 16,
+),
+),
+
+setState(() {
+_follow = !_follow;
+_saveFollowState(_follow);
+});
+
+Icon(
+_follow ? Icons.add : Icons.check,
+color: whiteColor,
+),
+
+```
+
 ## update_user.dart
 ```bash
 class UpdateUser {
