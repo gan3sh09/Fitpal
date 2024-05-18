@@ -5,149 +5,14 @@ import 'package:fitpal/Controller/logout_controller.dart';
 import 'package:fitpal/constants/colors.dart';
 import 'package:fitpal/constants/constraints.dart';
 import 'package:fitpal/constants/image_strings.dart';
+import 'package:fitpal/model/update_user.dart';
+import 'package:fitpal/screens/dashboard_screen/workout_plan_widget.dart';
 import 'package:fitpal/screens/edit_profile_screen/edit_profile_screen.dart';
 import 'package:fitpal/screens/login_screen/login_screen.dart';
-import 'package:fitpal/services/database.dart';
 import 'package:flutter/material.dart';
 
-class DashboardScreen extends StatefulWidget {
+class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
-
-  @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends State<DashboardScreen> {
-  //*to pass to edit screen
-  late String user_id;
-  //*function to fetch user info
-  Stream? userInfoStream;
-  getOnTheLoad() async {
-    userInfoStream = await DatabaseMethods().getUserInfoDetails();
-    setState(() {});
-  }
-
-  //*
-  @override
-  void initState() {
-    super.initState();
-    getOnTheLoad();
-  }
-
-  Widget userDetails() {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    return StreamBuilder(
-        stream: userInfoStream,
-        builder: (context, AsyncSnapshot snapshot) {
-          return snapshot.hasData
-              ? ListView.builder(
-                  itemCount: snapshot.data.docs.length,
-                  itemBuilder: (context, index) {
-                    DocumentSnapshot ds = snapshot.data.docs[index];
-                    return Container(
-                      height: 400,
-                      child: Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "Hello " + ds["first_name"],
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.bold,
-                                  textColor: darkTextColor,
-                                  textSize: 17),
-                            ),
-                          ),
-                          SizedBox(
-                            height: screenHeight * 0.004,
-                          ),
-                          //*user current status
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: screenWidth * 0.03,
-                                vertical: screenWidth * 0.02),
-                            height: screenHeight * 0.20,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.white
-                                      .withOpacity(0.6), // Color of the shadow
-                                  spreadRadius: 4, // Spread radius
-                                  blurRadius: 5, // Blur radius
-                                  offset: Offset(0, 1), // Offset of the shadow
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(10),
-                              color: const Color(0xFFe4e5f1),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                //* status  text
-                                Text(
-                                  "Status:",
-                                  style: kTextStyle.textStyle(
-                                      fontWeight: FontWeight.bold,
-                                      textColor: primaryColor,
-                                      textSize: 17),
-                                ),
-                                //*Current height  text
-                                Text(
-                                  "Currrent Height: " + ds["height"],
-                                  style: kTextStyle.textStyle(
-                                      fontWeight: FontWeight.w600,
-                                      textColor: darkTextColor,
-                                      textSize: 15),
-                                ),
-                                //*Current weight text
-                                Text(
-                                  "Currrent Weight:" + ds["weight"],
-                                  style: kTextStyle.textStyle(
-                                      fontWeight: FontWeight.w600,
-                                      textColor: darkTextColor,
-                                      textSize: 15),
-                                ),
-                                //*body type text
-                                Text(
-                                  "Body Type: Slim",
-                                  overflow: TextOverflow.fade,
-                                  style: kTextStyle.textStyle(
-                                      fontWeight: FontWeight.w600,
-                                      textColor: darkTextColor,
-                                      textSize: 15),
-                                ),
-                                //*Calories intake text
-                                Text(
-                                  "Calories intake:" + ds["calories"],
-                                  overflow: TextOverflow.fade,
-                                  style: kTextStyle.textStyle(
-                                      fontWeight: FontWeight.w600,
-                                      textColor: darkTextColor,
-                                      textSize: 15),
-                                ),
-                                //*Calories burnt text
-                                Text(
-                                  "Calories burnt: 1800",
-                                  style: kTextStyle.textStyle(
-                                      fontWeight: FontWeight.w600,
-                                      textColor: darkTextColor,
-                                      textSize: 15),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: screenHeight * 0.008,
-                          ),
-                        ],
-                      ),
-                    );
-                  })
-              : const SizedBox(child: Text("Loading..."));
-        });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -257,12 +122,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ],
       ),
-      body:
-          // Container(
-          //     child: Column(
-          //   children: [Expanded(child: userDetails()), Text("Hello")],
-          // )),
-          SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
               horizontal: screenWidth * 0.03, vertical: screenHeight * 0.005),
@@ -275,13 +135,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 children: [
                   Image(
                     image: const AssetImage(logoImage),
-                    height: screenHeight * 0.08,
+                    height: size.height * 0.08,
                   ),
                   ElevatedButton(
                     onPressed: () {
                       //* navigate to edit profile screen
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => EditProfileScreen(),
+                        builder: (context) => const EditProfileScreen(),
                       ));
                     },
                     style: ElevatedButton.styleFrom(
@@ -307,278 +167,217 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                 ],
               ),
-
               SizedBox(
                 height: screenHeight * 0.01,
               ),
-              //* user name
-              //*---------------------------------------
-              SizedBox(height: screenHeight * 0.25, child: userDetails()),
-
-              //* ----------------------------------------------------------------------------
-
-              //*goal   section ---------------------------------------------------------------
-              Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.03,
-                    vertical: screenWidth * 0.02),
-                height: screenHeight * 0.21,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color:
-                          Colors.white.withOpacity(0.6), // Color of the shadow
-                      spreadRadius: 4, // Spread radius
-                      blurRadius: 5, // Blur radius
-                      offset: Offset(0, 1), // Offset of the shadow
-                    ),
-                  ],
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color(0xFFe4e5f1),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //* goal  text
-                    Text(
-                      "Goal:",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.bold,
-                          textColor: primaryColor,
-                          textSize: 17),
-                    ),
-                    //*Duration  text
-                    Text(
-                      "Duration: 3 months remaining",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    //*Current weight text
-                    Text(
-                      "Currrent Weight: 60kg",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    //*Target weight text
-                    Text(
-                      "Target Weight: 70kg",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    //*Desired Outcomes text
-                    Text(
-                      "Desired Outcome:  Bulking",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                    //*Training requred text
-                    Text(
-                      "Training required: Muscle Strengthening, weight lifting",
-                      overflow: TextOverflow.visible,
-                      maxLines: 2,
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w600,
-                          textColor: darkTextColor,
-                          textSize: 15),
-                    ),
-                  ],
-                ),
-              ),
+              //* user details info ------------------------------------------------------------------------------
+              StreamBuilder<List<UpdateUser>>(
+                  stream: readUsers(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else if (!snapshot.hasData || snapshot.data == null) {
+                      return const Center(child: Text('No users found'));
+                    } else {
+                      final users = snapshot.data!.first;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Hello ${users.firstName}",
+                              style: kTextStyle.textStyle(
+                                  fontWeight: FontWeight.bold,
+                                  textColor: darkTextColor,
+                                  textSize: 17),
+                            ),
+                          ),
+                          SizedBox(
+                            height: screenHeight * 0.004,
+                          ),
+                          //*user current status
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth * 0.03,
+                                vertical: screenWidth * 0.02),
+                            height: screenHeight * 0.18,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: containerColor,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                //* status  text
+                                Text(
+                                  "Status:",
+                                  style: kTextStyle.textStyle(
+                                      fontWeight: FontWeight.bold,
+                                      textColor: primaryColor,
+                                      textSize: 17),
+                                ),
+                                //*Current height  text
+                                Text(
+                                  "Currrent Height: ${users.height}",
+                                  style: kTextStyle.textStyle(
+                                      fontWeight: FontWeight.w600,
+                                      textColor: darkTextColor,
+                                      textSize: 15),
+                                ),
+                                //*Current weight text
+                                Text(
+                                  "Currrent Weight: ${users.weight}",
+                                  style: kTextStyle.textStyle(
+                                      fontWeight: FontWeight.w600,
+                                      textColor: darkTextColor,
+                                      textSize: 15),
+                                ),
+                                //*body type text
+                                Text(
+                                  "Body Type: ${users.body}",
+                                  style: kTextStyle.textStyle(
+                                      fontWeight: FontWeight.w600,
+                                      textColor: darkTextColor,
+                                      textSize: 15),
+                                ),
+                                //*Calories intake text
+                                Text(
+                                  "Calories intake: ${users.calory}",
+                                  style: kTextStyle.textStyle(
+                                      fontWeight: FontWeight.w600,
+                                      textColor: darkTextColor,
+                                      textSize: 15),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                  }),
+//* user details sectio end -----------------------------------------------------------------------------------
               SizedBox(
                 height: screenHeight * 0.008,
               ),
-              //*today's workout plan   section ---------------------------------------------------------------
-              Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.03,
-                    vertical: screenWidth * 0.02),
-                height: screenHeight * 0.20,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color:
-                          Colors.white.withOpacity(0.6), // Color of the shadow
-                      spreadRadius: 4, // Spread radius
-                      blurRadius: 5, // Blur radius
-                      offset: Offset(0, 1), // Offset of the shadow
-                    ),
-                  ],
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color(0xFFe4e5f1),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //* today's workout plan  text
-                    Text(
-                      "Today's workout plan:",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.bold,
-                          textColor: primaryColor,
-                          textSize: 17),
-                    ),
-                    //*bemch press  text
-                    RichText(
-                      text: TextSpan(
-                        style: kTextStyle.textStyle(
-                            fontWeight: FontWeight.w600,
-                            textColor: darkTextColor,
-                            textSize: 15),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '🟢 ',
-                            style: kTextStyle.textStyle(
-                                fontWeight: FontWeight.w600,
-                                textColor: darkTextColor,
-                                textSize: 12),
-                          ),
-                          TextSpan(
-                              text: 'Bench Press: 4 sets * 8-10 reps',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: darkTextColor,
-                                  textSize: 15)),
-                        ],
-                      ),
-                    ),
-                    //*incline dumbell press  text
-                    RichText(
-                      text: TextSpan(
-                        style: kTextStyle.textStyle(
-                            fontWeight: FontWeight.w600,
-                            textColor: darkTextColor,
-                            textSize: 15),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '🟢 ',
-                            style: kTextStyle.textStyle(
-                                fontWeight: FontWeight.w600,
-                                textColor: darkTextColor,
-                                textSize: 12),
-                          ),
-                          TextSpan(
-                              text: 'Incline dumbell press: 4 sets * 8-10 reps',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: darkTextColor,
-                                  textSize: 15)),
-                        ],
-                      ),
-                    ),
-                    //*Chest flyes  text
-                    RichText(
-                      text: TextSpan(
-                        style: kTextStyle.textStyle(
-                            fontWeight: FontWeight.w600,
-                            textColor: darkTextColor,
-                            textSize: 15),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '🟢 ',
-                            style: kTextStyle.textStyle(
-                                fontWeight: FontWeight.w600,
-                                textColor: darkTextColor,
-                                textSize: 12),
-                          ),
-                          TextSpan(
-                              text: 'Chest Flyes: 3 sets * 10-12 reps',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: darkTextColor,
-                                  textSize: 15)),
-                        ],
-                      ),
-                    ),
-                    //*Tricep Dips press  text
-                    RichText(
-                      text: TextSpan(
-                        style: kTextStyle.textStyle(
-                            fontWeight: FontWeight.w600,
-                            textColor: darkTextColor,
-                            textSize: 15),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '🟢 ',
-                            style: kTextStyle.textStyle(
-                                fontWeight: FontWeight.w600,
-                                textColor: darkTextColor,
-                                textSize: 12),
-                          ),
-                          TextSpan(
-                              text: 'Tricep Dips: 4 sets * 8-10 reps',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: darkTextColor,
-                                  textSize: 15)),
-                        ],
-                      ),
-                    ),
-                    //*Tricep  pushdow dumbell press  text
-                    RichText(
-                      text: TextSpan(
-                        style: kTextStyle.textStyle(
-                            fontWeight: FontWeight.w600,
-                            textColor: darkTextColor,
-                            textSize: 15),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '🟢 ',
-                            style: kTextStyle.textStyle(
-                                fontWeight: FontWeight.w600,
-                                textColor: darkTextColor,
-                                textSize: 12),
-                          ),
-                          TextSpan(
-                              text: 'Tricep Pushdowns: 3 sets * 10-12 reps',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: darkTextColor,
-                                  textSize: 15)),
-                        ],
-                      ),
-                    ),
-                    //*Overhead Tricep Extension text
-                    RichText(
-                      text: TextSpan(
-                        style: kTextStyle.textStyle(
-                            fontWeight: FontWeight.w600,
-                            textColor: darkTextColor,
-                            textSize: 15),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '🟢 ',
-                            style: kTextStyle.textStyle(
-                                fontWeight: FontWeight.w600,
-                                textColor: darkTextColor,
-                                textSize: 12),
-                          ),
-                          TextSpan(
-                              text:
-                                  'Overhead Tricep Extension: 3 sets * 1-12 reps',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: darkTextColor,
-                                  textSize: 15)),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+              //*goal   section ---------------------------------------------------------------------------------
+
+              //* Stremabuilder ----------------------------------------------------------------------
+              StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("goal_info")
+                    .orderBy("createdAt", descending: true)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data == null) {
+                    return const Center(child: Text('No data found'));
+                  } else {
+                    List<DocumentSnapshot> goal = snapshot.data!.docs;
+                    return Container(
+                      height: screenHeight * 0.15,
+                      child: ListView.builder(
+                          itemCount: 1,
+                          itemBuilder: (cotext, index) {
+                            Map<String, dynamic> goalInfo =
+                                goal[index].data() as Map<String, dynamic>;
+
+                            return Expanded(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: screenWidth * 0.03,
+                                        vertical: screenWidth * 0.02),
+                                    height: screenHeight * 0.15,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: containerColor,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        //* status  text
+                                        Text(
+                                          "Goal:",
+                                          style: kTextStyle.textStyle(
+                                              fontWeight: FontWeight.bold,
+                                              textColor: primaryColor,
+                                              textSize: 17),
+                                        ),
+                                        Text(
+                                          "Date: ${goalInfo["date"]} ",
+                                          style: kTextStyle.textStyle(
+                                              fontWeight: FontWeight.w600,
+                                              textColor: darkTextColor,
+                                              textSize: 15),
+                                        ),
+                                        Text(
+                                          "Duration: ${goalInfo["duration"]}",
+                                          style: kTextStyle.textStyle(
+                                              fontWeight: FontWeight.w600,
+                                              textColor: darkTextColor,
+                                              textSize: 15),
+                                        ),
+                                        Text(
+                                          "Current Weight:  ${goalInfo["current_weight"]}",
+                                          style: kTextStyle.textStyle(
+                                              fontWeight: FontWeight.w600,
+                                              textColor: darkTextColor,
+                                              textSize: 15),
+                                        ),
+                                        Text(
+                                          "Target weight:  ${goalInfo["target_weight"]}",
+                                          style: kTextStyle.textStyle(
+                                              fontWeight: FontWeight.w600,
+                                              textColor: darkTextColor,
+                                              textSize: 15),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
+                    );
+                  }
+                },
               ),
+              //* goal secton ends --------------------------------------------------------------------
+              SizedBox(
+                height: screenHeight * 0.008,
+              ),
+
+              //*today's workout plan   section ---------------------------------------------------------------
+              const TodaysWorkoutPlan(),
             ],
           ),
         ),
       ),
     );
   }
+
+  Stream<List<UpdateUser>> readUsers() => FirebaseFirestore.instance
+      .collection('updatedUser')
+      .snapshots()
+      .map((snapshot) => snapshot.docs
+          .map(
+            (doc) => UpdateUser.fromJson(
+              doc.data(),
+            ),
+          )
+          .toList());
 }

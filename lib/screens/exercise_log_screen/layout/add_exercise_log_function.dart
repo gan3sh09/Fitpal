@@ -15,7 +15,7 @@ void addExerciseLog(BuildContext context, TextEditingController dateController,
     "workout_type": workoutTypeController.text,
   };
 
-  await DatabaseMethods().setGoalInfo(exerciseLogInfo, id).then((value) {
+  await DatabaseMethods().addExerciseLogInfo(exerciseLogInfo, id).then((value) {
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(

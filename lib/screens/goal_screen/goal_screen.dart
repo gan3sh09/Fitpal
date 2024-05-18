@@ -77,10 +77,212 @@ class GoalScreen extends StatelessWidget {
 
               SizedBox(
                 height: screenHeight * 0.01,
+              ), //* Todo burnt text ---------------------------------
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "To do:",
+                  style: kTextStyle.textStyle(
+                    fontWeight: FontWeight.bold,
+                    textColor: primaryColor,
+                    textSize: 17,
+                  ),
+                ),
+              ),
+              //*  todo section ---------------------------------------------------------------------------
+              Container(
+                padding: EdgeInsets.symmetric(
+                    vertical: screenHeight * 0.015,
+                    horizontal: screenWidth * 0.028),
+                decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 211, 212, 217),
+                    borderRadius: BorderRadius.circular(5)),
+                child: Column(
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        style: kTextStyle.textStyle(
+                          fontWeight: FontWeight.w600,
+                          textColor: darkTextColor,
+                          textSize: 15,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: '🟢 ',
+                            style: kTextStyle.textStyle(
+                                fontWeight: FontWeight.w600,
+                                textColor: darkTextColor,
+                                textSize: 12),
+                          ),
+                          TextSpan(
+                            text:
+                                'Calculate daily calories intake to ensure a surplus for gradual weight gain',
+                            style: kTextStyle.textStyle(
+                              fontWeight: FontWeight.w600,
+                              textColor: darkTextColor,
+                              textSize: 15,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    //*--------------------
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        style: kTextStyle.textStyle(
+                          fontWeight: FontWeight.w600,
+                          textColor: darkTextColor,
+                          textSize: 15,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: '🟢 ',
+                            style: kTextStyle.textStyle(
+                                fontWeight: FontWeight.w600,
+                                textColor: darkTextColor,
+                                textSize: 12),
+                          ),
+                          TextSpan(
+                            text:
+                                'Focus on consuming nutrient-dense foods such as lean proteins, complex carbohydates, helathy fats. and frouits and vegetables',
+                            style: kTextStyle.textStyle(
+                              fontWeight: FontWeight.w600,
+                              textColor: darkTextColor,
+                              textSize: 15,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        style: kTextStyle.textStyle(
+                          fontWeight: FontWeight.w600,
+                          textColor: darkTextColor,
+                          textSize: 15,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: '🟢 ',
+                            style: kTextStyle.textStyle(
+                                fontWeight: FontWeight.w600,
+                                textColor: darkTextColor,
+                                textSize: 12),
+                          ),
+                          TextSpan(
+                            text:
+                                'Desing a structured workout including strength training  exercises targeting major muscle groups',
+                            style: kTextStyle.textStyle(
+                              fontWeight: FontWeight.w600,
+                              textColor: darkTextColor,
+                              textSize: 15,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        style: kTextStyle.textStyle(
+                          fontWeight: FontWeight.w600,
+                          textColor: darkTextColor,
+                          textSize: 15,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: '🟢 ',
+                            style: kTextStyle.textStyle(
+                                fontWeight: FontWeight.w600,
+                                textColor: darkTextColor,
+                                textSize: 12),
+                          ),
+                          TextSpan(
+                            text:
+                                'Aim for a gradual weight gain of approximately 0.5 kg per week to ensure healthy progress',
+                            style: kTextStyle.textStyle(
+                              fontWeight: FontWeight.w600,
+                              textColor: darkTextColor,
+                              textSize: 15,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        style: kTextStyle.textStyle(
+                          fontWeight: FontWeight.w600,
+                          textColor: darkTextColor,
+                          textSize: 15,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: '🟢 ',
+                            style: kTextStyle.textStyle(
+                                fontWeight: FontWeight.w600,
+                                textColor: darkTextColor,
+                                textSize: 12),
+                          ),
+                          TextSpan(
+                            text:
+                                'Monitor progress reguraly and adjust the diet and workout plan as needed to maintain a healthy lifestyle.',
+                            style: kTextStyle.textStyle(
+                              fontWeight: FontWeight.w600,
+                              textColor: darkTextColor,
+                              textSize: 15,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        style: kTextStyle.textStyle(
+                          fontWeight: FontWeight.w600,
+                          textColor: darkTextColor,
+                          textSize: 15,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: '🟢 ',
+                            style: kTextStyle.textStyle(
+                                fontWeight: FontWeight.w600,
+                                textColor: darkTextColor,
+                                textSize: 12),
+                          ),
+                          TextSpan(
+                            text:
+                                'Listen to your body, prioritize consistency, and practice patience throughout the process',
+                            style: kTextStyle.textStyle(
+                              fontWeight: FontWeight.w600,
+                              textColor: darkTextColor,
+                              textSize: 15,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
               SizedBox(
-                height: screenHeight * 0.004,
+                height: screenHeight * 0.008,
               ),
               //*user current status
               //* Stremabuilder ----------------------------------------------------------------------
@@ -99,515 +301,103 @@ class GoalScreen extends StatelessWidget {
                     return const Center(child: Text('No data found'));
                   } else {
                     List<DocumentSnapshot> goal = snapshot.data!.docs;
-                    return SingleChildScrollView(
-                      child: Container(
-                        height: screenHeight * 0.9,
-                        child: ListView.builder(
-                            itemCount: goal.length,
-                            itemBuilder: (cotext, index) {
-                              Map<String, dynamic> goalInfo =
-                                  goal[index].data() as Map<String, dynamic>;
+                    return Container(
+                      height: screenHeight * 0.9,
+                      child: ListView.builder(
+                          itemCount: goal.length,
+                          itemBuilder: (cotext, index) {
+                            Map<String, dynamic> goalInfo =
+                                goal[index].data() as Map<String, dynamic>;
 
-                              return Expanded(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: screenWidth * 0.03,
-                                          vertical: screenWidth * 0.02),
-                                      height: screenHeight * 0.15,
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color:
-                                            Color.fromARGB(255, 211, 212, 217),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "Date: ${goalInfo["date"]} ",
-                                            style: kTextStyle.textStyle(
-                                                fontWeight: FontWeight.w600,
-                                                textColor: darkTextColor,
-                                                textSize: 15),
-                                          ),
-                                          Text(
-                                            "Duration: ${goalInfo["duration"]}",
-                                            style: kTextStyle.textStyle(
-                                                fontWeight: FontWeight.w600,
-                                                textColor: darkTextColor,
-                                                textSize: 15),
-                                          ),
-                                          Text(
-                                            "Current Weight:  ${goalInfo["current_weight"]}",
-                                            style: kTextStyle.textStyle(
-                                                fontWeight: FontWeight.w600,
-                                                textColor: darkTextColor,
-                                                textSize: 15),
-                                          ),
-                                          Text(
-                                            "Target weight:  ${goalInfo["target_weight"]}",
-                                            style: kTextStyle.textStyle(
-                                                fontWeight: FontWeight.w600,
-                                                textColor: darkTextColor,
-                                                textSize: 15),
-                                          ),
-                                        ],
-                                      ),
+                            return Expanded(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: screenWidth * 0.03,
+                                        vertical: screenWidth * 0.02),
+                                    height: screenHeight * 0.15,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Color.fromARGB(255, 211, 212, 217),
                                     ),
-                                    SizedBox(
-                                      height: screenHeight * 0.005,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Date: ${goalInfo["date"]} ",
+                                          style: kTextStyle.textStyle(
+                                              fontWeight: FontWeight.w600,
+                                              textColor: darkTextColor,
+                                              textSize: 15),
+                                        ),
+                                        Text(
+                                          "Duration: ${goalInfo["duration"]}",
+                                          style: kTextStyle.textStyle(
+                                              fontWeight: FontWeight.w600,
+                                              textColor: darkTextColor,
+                                              textSize: 15),
+                                        ),
+                                        Text(
+                                          "Current Weight:  ${goalInfo["current_weight"]}",
+                                          style: kTextStyle.textStyle(
+                                              fontWeight: FontWeight.w600,
+                                              textColor: darkTextColor,
+                                              textSize: 15),
+                                        ),
+                                        Text(
+                                          "Target weight:  ${goalInfo["target_weight"]}",
+                                          style: kTextStyle.textStyle(
+                                              fontWeight: FontWeight.w600,
+                                              textColor: darkTextColor,
+                                              textSize: 15),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              );
-                            }),
-                      ),
+                                  ),
+                                  SizedBox(
+                                    height: screenHeight * 0.005,
+                                  ),
+                                  //*8=
+                                ],
+                              ),
+                            );
+                          }),
                     );
                   }
                 },
               ),
               //* Stremabuilder ----------------------------------------------------------------------
-              Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.03,
-                    vertical: screenWidth * 0.02),
-                height: screenHeight * 0.5,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: containerColor,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //*Date   text
-                    Text(
-                      "Date: 04/04/2024",
-                      style: kTextStyle.textStyle(
-                        fontWeight: FontWeight.w600,
-                        textColor: darkTextColor,
-                        textSize: 15,
-                      ),
-                    ),
-                    //*duration weight text
-                    Text(
-                      "Duration: 6 months",
-                      style: kTextStyle.textStyle(
-                        fontWeight: FontWeight.w600,
-                        textColor: darkTextColor,
-                        textSize: 15,
-                      ),
-                    ),
-                    //*current weight text
-                    Text(
-                      "Current Weight: 45kg",
-                      style: kTextStyle.textStyle(
-                        fontWeight: FontWeight.w600,
-                        textColor: darkTextColor,
-                        textSize: 15,
-                      ),
-                    ),
-                    //*Target weight text
-                    Text(
-                      "Target Weight: 55kg",
-                      style: kTextStyle.textStyle(
-                        fontWeight: FontWeight.w600,
-                        textColor: darkTextColor,
-                        textSize: 15,
-                      ),
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.001,
-                    ),
-                    //* Todo burnt text ---------------------------------
-                    Text(
-                      "To do:",
-                      style: kTextStyle.textStyle(
-                        fontWeight: FontWeight.bold,
-                        textColor: primaryColor,
-                        textSize: 17,
-                      ),
-                    ),
-                    //*  text
-                    Container(
-                      padding: EdgeInsets.only(left: screenWidth * 0.014),
-                      child: RichText(
-                        text: TextSpan(
-                          style: kTextStyle.textStyle(
-                            fontWeight: FontWeight.w600,
-                            textColor: darkTextColor,
-                            textSize: 15,
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '🟢 ',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: darkTextColor,
-                                  textSize: 12),
-                            ),
-                            TextSpan(
-                              text:
-                                  'Calculate daily calories intake to ensure a surplus for gradual weight gain',
-                              style: kTextStyle.textStyle(
-                                fontWeight: FontWeight.w600,
-                                textColor: darkTextColor,
-                                textSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: screenWidth * 0.014),
-                      child: RichText(
-                        text: TextSpan(
-                          style: kTextStyle.textStyle(
-                            fontWeight: FontWeight.w600,
-                            textColor: darkTextColor,
-                            textSize: 15,
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '🟢 ',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: darkTextColor,
-                                  textSize: 12),
-                            ),
-                            TextSpan(
-                              text:
-                                  'Calculate daily calories intake to ensure a surplus for gradual weight gain',
-                              style: kTextStyle.textStyle(
-                                fontWeight: FontWeight.w600,
-                                textColor: darkTextColor,
-                                textSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: screenWidth * 0.014),
-                      child: RichText(
-                        text: TextSpan(
-                          style: kTextStyle.textStyle(
-                            fontWeight: FontWeight.w600,
-                            textColor: darkTextColor,
-                            textSize: 15,
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '🟢 ',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: darkTextColor,
-                                  textSize: 12),
-                            ),
-                            TextSpan(
-                              text:
-                                  'Calculate daily calories intake to ensure a surplus for gradual weight gain',
-                              style: kTextStyle.textStyle(
-                                fontWeight: FontWeight.w600,
-                                textColor: darkTextColor,
-                                textSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: screenWidth * 0.014),
-                      child: RichText(
-                        text: TextSpan(
-                          style: kTextStyle.textStyle(
-                            fontWeight: FontWeight.w600,
-                            textColor: darkTextColor,
-                            textSize: 15,
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '🟢 ',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: darkTextColor,
-                                  textSize: 12),
-                            ),
-                            TextSpan(
-                              text:
-                                  'Calculate daily calories intake to ensure a surplus for gradual weight gain',
-                              style: kTextStyle.textStyle(
-                                fontWeight: FontWeight.w600,
-                                textColor: darkTextColor,
-                                textSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: screenWidth * 0.014),
-                      child: RichText(
-                        text: TextSpan(
-                          style: kTextStyle.textStyle(
-                            fontWeight: FontWeight.w600,
-                            textColor: darkTextColor,
-                            textSize: 15,
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '🟢 ',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: darkTextColor,
-                                  textSize: 12),
-                            ),
-                            TextSpan(
-                              text:
-                                  'Calculate daily calories intake to ensure a surplus for gradual weight gain',
-                              style: kTextStyle.textStyle(
-                                fontWeight: FontWeight.w600,
-                                textColor: darkTextColor,
-                                textSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: screenWidth * 0.014),
-                      child: RichText(
-                        text: TextSpan(
-                          style: kTextStyle.textStyle(
-                            fontWeight: FontWeight.w600,
-                            textColor: darkTextColor,
-                            textSize: 15,
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '🟢 ',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: darkTextColor,
-                                  textSize: 12),
-                            ),
-                            TextSpan(
-                              text:
-                                  'Calculate daily calories intake to ensure a surplus for gradual weight gain',
-                              style: kTextStyle.textStyle(
-                                fontWeight: FontWeight.w600,
-                                textColor: darkTextColor,
-                                textSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: screenHeight * 0.008,
-              ),
+              // Container(
+              //   padding: EdgeInsets.symmetric(
+              //       horizontal: screenWidth * 0.03,
+              //       vertical: screenWidth * 0.02),
+              //   height: screenHeight * 0.5,
+              //   width: double.infinity,
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(10),
+              //     color: containerColor,
+              //   ),
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       SizedBox(
+              //         height: screenHeight * 0.001,
+              //       ),
 
-              SizedBox(
-                height: screenHeight * 0.008,
-              ),
-              //*today's workout plan   section ---------------------------------------------------------------
-              Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.03,
-                    vertical: screenWidth * 0.02),
-                height: screenHeight * 0.20,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: containerColor,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //* today's workout plan  text
-                    Text(
-                      "Today's workout plan:",
-                      style: kTextStyle.textStyle(
-                        fontWeight: FontWeight.bold,
-                        textColor: primaryColor,
-                        textSize: 17,
-                      ),
-                    ),
-                    //*bench press  text
-                    RichText(
-                      text: TextSpan(
-                        style: kTextStyle.textStyle(
-                            fontWeight: FontWeight.w600,
-                            textColor: darkTextColor,
-                            textSize: 15),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '🟢 ',
-                            style: kTextStyle.textStyle(
-                                fontWeight: FontWeight.w600,
-                                textColor: darkTextColor,
-                                textSize: 12),
-                          ),
-                          TextSpan(
-                              text: 'Bench Press: 4 sets * 8-10 reps',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: darkTextColor,
-                                  textSize: 15)),
-                        ],
-                      ),
-                    ),
-                    //*incline dumbell press  text
-                    RichText(
-                      text: TextSpan(
-                        style: kTextStyle.textStyle(
-                            fontWeight: FontWeight.w600,
-                            textColor: darkTextColor,
-                            textSize: 15),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '🟢 ',
-                            style: kTextStyle.textStyle(
-                                fontWeight: FontWeight.w600,
-                                textColor: darkTextColor,
-                                textSize: 12),
-                          ),
-                          TextSpan(
-                              text: 'Incline dumbell press: 4 sets * 8-10 reps',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: darkTextColor,
-                                  textSize: 15)),
-                        ],
-                      ),
-                    ),
-                    //*Chest flyes  text
-                    RichText(
-                      text: TextSpan(
-                        style: kTextStyle.textStyle(
-                            fontWeight: FontWeight.w600,
-                            textColor: darkTextColor,
-                            textSize: 15),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '🟢 ',
-                            style: kTextStyle.textStyle(
-                                fontWeight: FontWeight.w600,
-                                textColor: darkTextColor,
-                                textSize: 12),
-                          ),
-                          TextSpan(
-                              text: 'Chest Flyes: 3 sets * 10-12 reps',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: darkTextColor,
-                                  textSize: 15)),
-                        ],
-                      ),
-                    ),
-                    //*Tricep Dips press  text
-                    RichText(
-                      text: TextSpan(
-                        style: kTextStyle.textStyle(
-                            fontWeight: FontWeight.w600,
-                            textColor: darkTextColor,
-                            textSize: 15),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '🟢 ',
-                            style: kTextStyle.textStyle(
-                                fontWeight: FontWeight.w600,
-                                textColor: darkTextColor,
-                                textSize: 12),
-                          ),
-                          TextSpan(
-                              text: 'Tricep Dips: 4 sets * 8-10 reps',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: darkTextColor,
-                                  textSize: 15)),
-                        ],
-                      ),
-                    ),
-                    //*Tricep  pushdow dumbell press  text
-                    RichText(
-                      text: TextSpan(
-                        style: kTextStyle.textStyle(
-                            fontWeight: FontWeight.w600,
-                            textColor: darkTextColor,
-                            textSize: 15),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '🟢 ',
-                            style: kTextStyle.textStyle(
-                                fontWeight: FontWeight.w600,
-                                textColor: darkTextColor,
-                                textSize: 12),
-                          ),
-                          TextSpan(
-                              text: 'Tricep Pushdowns: 3 sets * 10-12 reps',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: darkTextColor,
-                                  textSize: 15)),
-                        ],
-                      ),
-                    ),
-                    //*Overhead Tricep Extension text
-                    RichText(
-                      text: TextSpan(
-                        style: kTextStyle.textStyle(
-                            fontWeight: FontWeight.w600,
-                            textColor: darkTextColor,
-                            textSize: 15),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '🟢 ',
-                            style: kTextStyle.textStyle(
-                                fontWeight: FontWeight.w600,
-                                textColor: darkTextColor,
-                                textSize: 12),
-                          ),
-                          TextSpan(
-                              text:
-                                  'Overhead Tricep Extension: 3 sets * 1-12 reps',
-                              style: kTextStyle.textStyle(
-                                  fontWeight: FontWeight.w600,
-                                  textColor: darkTextColor,
-                                  textSize: 15)),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              //       //* -------------------------------------------------------------------
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: screenHeight * 0.008,
+              // ),
+
+              // SizedBox(
+              //   height: screenHeight * 0.008,
+              // ),
             ],
           ),
         ),

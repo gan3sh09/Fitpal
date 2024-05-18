@@ -117,7 +117,7 @@ class _AddNutritionScreenState extends State<AddNutritionScreen> {
                 ), */
                 TextFormField(
                   controller: foodName,
-                  keyboardType: TextInputType.phone,
+                  keyboardType: TextInputType.name,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: const InputDecoration(),
                 ),

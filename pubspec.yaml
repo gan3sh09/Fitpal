@@ -41,6 +41,7 @@ dependencies:
   flutter_native_splash: ^2.4.0
   get: ^4.6.6
   random_string: ^2.3.1
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:

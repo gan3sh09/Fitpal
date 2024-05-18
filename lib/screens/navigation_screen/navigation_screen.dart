@@ -4,8 +4,8 @@ import 'package:fitpal/constants/constraints.dart';
 import 'package:fitpal/screens/dashboard_screen/dashboard_screen.dart';
 import 'package:fitpal/screens/exercise_log_screen/exercise_log_screen.dart';
 import 'package:fitpal/screens/goal_screen/goal_screen.dart';
-import 'package:fitpal/screens/social_screen/social_screen.dart';
 import 'package:fitpal/screens/nutrition_tracker_screen/nutrition_tracker_screen.dart';
+import 'package:fitpal/screens/social_screen/social_screen.dart';
 import 'package:flutter/material.dart';
 
 class NavigationScreen extends StatefulWidget {

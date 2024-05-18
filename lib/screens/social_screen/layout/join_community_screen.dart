@@ -2,9 +2,36 @@ import 'package:fitpal/constants/colors.dart';
 import 'package:fitpal/constants/constraints.dart';
 import 'package:fitpal/constants/image_strings.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class JoinCommunityScreen extends StatelessWidget {
+class JoinCommunityScreen extends StatefulWidget {
   const JoinCommunityScreen({super.key});
+
+  @override
+  State<JoinCommunityScreen> createState() => _JoinCommunityScreenState();
+}
+
+class _JoinCommunityScreenState extends State<JoinCommunityScreen> {
+  bool _follow = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFollowState();
+  }
+
+  _loadFollowState() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      // Use 'follow' as a key to store and fetch the boolean value
+      _follow = prefs.getBool('follow') ?? true; // Default to true if not set
+    });
+  }
+
+  _saveFollowState(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('follow', value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +80,9 @@ class JoinCommunityScreen extends StatelessWidget {
                       width: screenWidth * 0.75,
                       child: ElevatedButton(
                         onPressed: () {},
-                        child: const Text(
-                          'Blogs',
-                          style: TextStyle(
+                        child: Text(
+                          _follow ? 'Blogs' : 'Following',
+                          style: const TextStyle(
                             color: whiteColor,
                             fontSize: 16,
                           ),
@@ -65,13 +92,15 @@ class JoinCommunityScreen extends StatelessWidget {
                     SizedBox(
                       width: screenWidth * 0.15,
                       child: ElevatedButton(
-                        onPressed: () {},
-                        child: const Text(
-                          '+',
-                          style: TextStyle(
-                            color: whiteColor,
-                            fontSize: 16,
-                          ),
+                        onPressed: () {
+                          setState(() {
+                            _follow = !_follow;
+                            _saveFollowState(_follow);
+                          });
+                        },
+                        child: Icon(
+                          _follow ? Icons.add : Icons.check,
+                          color: whiteColor,
                         ),
                       ),
                     ),

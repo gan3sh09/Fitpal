@@ -1,67 +1,33 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitpal/model/update_user.dart';
 import 'package:flutter/material.dart';
-import 'package:random_string/random_string.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  String? id;
-  EditProfileScreen({super.key, this.id});
+  const EditProfileScreen({super.key});
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final contactController = TextEditingController();
-  final heightController = TextEditingController();
-  final widthController = TextEditingController();
-  final caloriesController = TextEditingController();
-  //*
-  String userId = "";
-  void _initializeFirebase() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    setState(() {
-      userId = user!.uid;
-      print("userid:" + userId);
-    });
-    // Retrieve user information from Firestore and set the controllers
-    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
-        .collection('User_info')
-        .doc(userId)
-        .get();
-    if (userSnapshot.exists) {
-      firstNameController.text = userSnapshot['first_name'] ?? "N/A";
-      lastNameController.text = userSnapshot['last_name'] ?? "N/A";
-      contactController.text = userSnapshot['contact'] ?? "N/A";
-      heightController.text = userSnapshot['height'] ?? "N/A";
-      widthController.text = userSnapshot['weight'] ?? "N/A";
-      caloriesController.text = userSnapshot['calories'] ?? "N/A";
-    }
-  }
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController bodyType = TextEditingController();
+  TextEditingController heightController = TextEditingController();
+  TextEditingController weightController = TextEditingController();
+  TextEditingController caloriesController = TextEditingController();
 
-  void _updateUserInfo() async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('User_info')
-          .doc(userId)
-          .update({
-        "first_name": firstNameController.text,
-        "last_name": firstNameController.text,
-        "contact": firstNameController.text,
-        "height": firstNameController.text,
-        "weight": firstNameController.text,
-        "calories": firstNameController.text,
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('User information updated successfully')),
-      );
-    } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error updating user information')),
-      );
-    }
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    bodyType.dispose();
+    heightController.dispose();
+    weightController.dispose();
+    caloriesController.dispose();
+    super.dispose();
   }
 
   @override
@@ -146,7 +112,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
                 //* mobile  textform field
                 const Text(
-                  "Contact Number",
+                  "Body Type",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -159,8 +125,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   keyboardType: TextInputType.number,
                 ), */
                 TextFormField(
-                  controller: contactController,
-                  keyboardType: TextInputType.phone,
+                  controller: bodyType,
+                  keyboardType: TextInputType.text,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: const InputDecoration(),
                 ),
@@ -183,7 +149,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ), */
                 TextFormField(
                   controller: heightController,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.name,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: const InputDecoration(),
                 ),
@@ -204,8 +170,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   keyboardType: TextInputType.number,
                 ), */
                 TextFormField(
-                  controller: widthController,
-                  keyboardType: TextInputType.number,
+                  controller: weightController,
+                  keyboardType: TextInputType.name,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: const InputDecoration(),
                 ),
@@ -235,63 +201,50 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   height: screenHeight * 0.03,
                 ),
                 //*Save button
-                Center(
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        _initializeFirebase();
-                        //* generating custome id
-                        String Id = randomAlphaNumeric(5);
-                        //* storing the user info in a single map
-                        Map<String, dynamic> userInfoMap = {
-                          "first_name": firstNameController.text,
-                          "last_name": firstNameController.text,
-                          "contact": firstNameController.text,
-                          "height": firstNameController.text,
-                          "weight": firstNameController.text,
-                          "calories": firstNameController.text,
-                        };
-                        // await DatabaseMethods()
-                        //     .updateUserInfo(Id, userInfoMap)
-                        //     .then((value) {
-                        //   Navigator.pop(context);
-                        //   ScaffoldMessenger.of(context).showSnackBar(
-                        //     const SnackBar(
-                        //       backgroundColor: Colors.green,
-                        //       content: Text('User Updated Successfully'),
-                        //     ),
-                        //   );
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      final user = UpdateUser(
+                        firstName: firstNameController.text,
+                        lastName: lastNameController.text,
+                        body: bodyType.text,
+                        height: heightController.text,
+                        weight: weightController.text,
+                        calory: caloriesController.text,
+                      );
+                      createUser(user);
 
-                        // Map<String, dynamic> userInfoMap = {
-                        //  "id":Id,
-                        //   "first_name": firstNameController.text,
-                        //   "last_name": lastNameController.text,
-                        //   "contact": contactController.text,
-                        //   "height": heightController.text,
-                        //   "weight": widthController.text,
-                        //   "calories": caloriesController.text,
-                        // };
-                        // await DatabaseMethods()
-                        //     .addUserInfo(userInfoMap, Id)
-                        //     .then((value) {
-                        //   Navigator.pop(context);
-                        //   ScaffoldMessenger.of(context).showSnackBar(
-                        //     const SnackBar(
-                        //       backgroundColor: Colors.green,
-                        //       content: Text('User Updated Successfully'),
-                        //     ),
-                        //   );
-                        //   firstNameController.text = "";
-                        //   lastNameController.text = "";
-                        //   contactController.text = "";
-                        //   heightController.text = "";
-                        //   widthController.text = "";
-                        //   caloriesController.text = "";
-                        // });
-                      },
-                      child: const Text('Save'),
-                    ),
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Save'),
+                  ),
+                ),
+                SizedBox(
+                  height: screenHeight * 0.03,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      UpdateUser updatedUser = UpdateUser(
+                        firstName: firstNameController.text,
+                        lastName: lastNameController.text,
+                        body: bodyType.text,
+                        height: heightController.text,
+                        weight: weightController.text,
+                        calory: caloriesController.text,
+                      );
+
+                      updateUser(updatedUser).then((_) {
+                        // Handle successful update
+                        print('User successfully updated.');
+                      }).catchError((error) {
+                        // Handle errors
+                        print('Failed to update user: $error');
+                      });
+                    },
+                    child: const Text('Update'),
                   ),
                 ),
               ],
@@ -300,5 +253,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
       ),
     );
+  }
+
+  Future createUser(UpdateUser user) async {
+    final docUser =
+        FirebaseFirestore.instance.collection('updatedUser').doc('my-id');
+    user.id = docUser.id;
+
+    final json = user.toJson();
+
+    await docUser.set(json);
+  }
+
+  Future<void> updateUser(UpdateUser user) async {
+    final docUser =
+        FirebaseFirestore.instance.collection('updatedUser').doc('my-id');
+
+    final json = user.toJson();
+
+    await docUser.update(json);
   }
 }
