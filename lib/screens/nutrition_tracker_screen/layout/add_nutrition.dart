@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_final_fields
 
+import 'package:fitpal/constants/colors.dart';
+import 'package:fitpal/form_validation/formValidation.dart';
 import 'package:fitpal/screens/nutrition_tracker_screen/layout/add_nutrition_function.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +13,8 @@ class AddNutritionScreen extends StatefulWidget {
 }
 
 class _AddNutritionScreenState extends State<AddNutritionScreen> {
+  //* form key for form validation
+  final _formKey = GlobalKey<FormState>();
   TextEditingController datePicker = TextEditingController();
   TextEditingController entryNumber = TextEditingController();
   TextEditingController foodName = TextEditingController();
@@ -44,148 +48,160 @@ class _AddNutritionScreenState extends State<AddNutritionScreen> {
           child: Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: screenWidth * 0.04, vertical: screenHeight * 0.005),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                //* textform fields starts from heree --------------------------------
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //* textform fields starts from heree --------------------------------
 
-                //* date textform field
-                const Text(
-                  "Date",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black87,
-                  ),
-                ),
-                /* CustomTextFormField(
-                  controller: firstNameController,
-                  keyboardType: TextInputType.name,
-                ), */
-                TextField(
-                  controller: datePicker,
-                  decoration: const InputDecoration(
-                    filled: true,
-                  ),
-                  readOnly: true,
-                  onTap: () {
-                    _selectDate();
-                  },
-                ),
-
-                SizedBox(
-                  height: screenHeight * 0.005,
-                ),
-
-                //* entry textform field
-                const Text(
-                  "Entry Number",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black87,
-                  ),
-                ),
-
-                /* CustomTextFormField(
-                  controller: lastNameController,
-                  keyboardType: TextInputType.name,
-                ), */
-                TextFormField(
-                  controller: entryNumber,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(),
-                ),
-                SizedBox(
-                  height: screenHeight * 0.005,
-                ),
-                //* food name textform field
-                const Text(
-                  "Food Name",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black87,
-                  ),
-                ),
-
-                /* CustomTextFormField(
-                  controller: mobileController,
-                  keyboardType: TextInputType.number,
-                ), */
-                TextFormField(
-                  controller: foodName,
-                  keyboardType: TextInputType.name,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: const InputDecoration(),
-                ),
-                SizedBox(
-                  height: screenHeight * 0.005,
-                ),
-                //* calories  textform field
-                const Text(
-                  "Nutrition Intake",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black87,
-                  ),
-                ),
-
-                TextFormField(
-                  controller: nutritionIntake,
-                  keyboardType: TextInputType.number,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: const InputDecoration(),
-                ),
-                //* total calories consumed   textform field
-                const Text(
-                  "Calories Consumed",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black87,
-                  ),
-                ),
-
-                TextFormField(
-                  controller: caloriesConsumed,
-                  keyboardType: TextInputType.number,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: const InputDecoration(),
-                ),
-                SizedBox(
-                  height: screenHeight * 0.03,
-                ),
-                //*Save button
-                Center(
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        //             addExerciseLog(
-                        //   context,
-                        //   dateController,
-                        //   durationController,
-                        //   intensityController,
-                        //   workoutTypeController,
-                        // );
-                        addNutrition(
-                          context,
-                          datePicker,
-                          entryNumber,
-                          foodName,
-                          nutritionIntake,
-                          caloriesConsumed,
-                        );
-                      },
-                      child: const Text('Add'),
+                  //* date textform field
+                  const Text(
+                    "Date",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black87,
                     ),
                   ),
-                ),
-              ],
+                  /* CustomTextFormField(
+                    controller: firstNameController,
+                    keyboardType: TextInputType.name,
+                  ), */
+                  TextFormField(
+                    validator: Validators.validateinputFields,
+                    controller: datePicker,
+                    decoration: const InputDecoration(
+                      filled: true,
+                    ),
+                    readOnly: true,
+                    onTap: () {
+                      _selectDate();
+                    },
+                  ),
+
+                  SizedBox(
+                    height: screenHeight * 0.005,
+                  ),
+
+                  //* entry textform field
+                  const Text(
+                    "Entry Number",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black87,
+                    ),
+                  ),
+
+                  TextFormField(
+                    validator: Validators.validateinputFields,
+                    controller: entryNumber,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(),
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.005,
+                  ),
+                  //* food name textform field
+                  const Text(
+                    "Food Name",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black87,
+                    ),
+                  ),
+
+                  TextFormField(
+                    validator: Validators.validateinputFields,
+                    controller: foodName,
+                    keyboardType: TextInputType.name,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: const InputDecoration(),
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.005,
+                  ),
+                  //* calories  textform field
+                  const Text(
+                    "Nutrition Intake",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black87,
+                    ),
+                  ),
+
+                  TextFormField(
+                    validator: Validators.validateinputFields,
+                    controller: nutritionIntake,
+                    keyboardType: TextInputType.number,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: const InputDecoration(),
+                  ),
+                  //* total calories consumed   textform field
+                  const Text(
+                    "Calories Consumed",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black87,
+                    ),
+                  ),
+
+                  TextFormField(
+                    validator: Validators.validateinputFields,
+                    controller: caloriesConsumed,
+                    keyboardType: TextInputType.number,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: const InputDecoration(),
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.03,
+                  ),
+                  //*Save button
+                  Center(
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            barrierDismissible:
+                                false, // Prevents dismissing dialog by tapping outside
+                            builder: (BuildContext context) {
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                  color: primaryColor,
+                                ),
+                              );
+                            },
+                          );
+
+                          // Simulate a delay of 3 seconds before navigating
+                          Future.delayed(const Duration(seconds: 1), () {
+                            Navigator.pop(context); // Close the dialog
+                            if (_formKey.currentState!.validate()) {
+                              addNutrition(
+                                context,
+                                datePicker,
+                                entryNumber,
+                                foodName,
+                                nutritionIntake,
+                                caloriesConsumed,
+                              );
+                            }
+                          });
+                        },
+                        child: const Text('Add'),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

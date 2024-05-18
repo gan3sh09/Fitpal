@@ -28,70 +28,71 @@ class NutritionTrackerScreen extends StatelessWidget {
         ),
         backgroundColor: primaryColor,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: screenWidth * 0.03, vertical: screenHeight * 0.005),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Image(
-                    image: const AssetImage(logoImage),
-                    height: size.height * 0.08,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      //* navigate to Add Nutrition screen
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const AddNutritionScreen(),
-                      ));
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: themeColor,
-                      backgroundColor: primaryColor,
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: screenWidth * 0.03, vertical: screenHeight * 0.005),
+        child: Column(
+          children: [
+            //* row for  add section ---------------------------------------------
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image(
+                  image: const AssetImage(logoImage),
+                  height: size.height * 0.08,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    //* navigate to Add Nutrition screen
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const AddNutritionScreen(),
+                    ));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: themeColor,
+                    backgroundColor: primaryColor,
 
-                      elevation: 5, // Button elevation
-                      padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth * 0.015,
-                          vertical: screenHeight * 0.008), // Button padding
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(15), // Button border radius
-                      ),
-                    ),
-                    child: Text(
-                      "Add",
-                      style: kTextStyle.textStyle(
-                          fontWeight: FontWeight.w700,
-                          textColor: whiteColor,
-                          textSize: 16),
+                    elevation: 5, // Button elevation
+                    padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.015,
+                        vertical: screenHeight * 0.008), // Button padding
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(15), // Button border radius
                     ),
                   ),
-                ],
-              ),
-              SizedBox(
-                height: screenHeight * 0.01,
-              ),
-              //* user name
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Summary",
-                  style: kTextStyle.textStyle(
-                    fontWeight: FontWeight.bold,
-                    textColor: darkTextColor,
-                    textSize: 17,
+                  child: Text(
+                    "Add",
+                    style: kTextStyle.textStyle(
+                        fontWeight: FontWeight.w700,
+                        textColor: whiteColor,
+                        textSize: 16),
                   ),
                 ),
+              ],
+            ),
+            SizedBox(
+              height: screenHeight * 0.01,
+            ),
+            //* user name
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "Summary",
+                style: kTextStyle.textStyle(
+                  fontWeight: FontWeight.bold,
+                  textColor: darkTextColor,
+                  textSize: 17,
+                ),
               ),
-              SizedBox(
-                height: screenHeight * 0.004,
-              ),
-              //*user current status
-              //* ------------------------------------------------------------------------
-              StreamBuilder(
+            ),
+            SizedBox(
+              height: screenHeight * 0.004,
+            ),
+            //*user current status
+            //* ------------------------------------------------------------------------
+            Flexible(
+              child: StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection("nutrition_info")
                     .snapshots(),
@@ -108,7 +109,7 @@ class NutritionTrackerScreen extends StatelessWidget {
                     List<DocumentSnapshot> nutrition = snapshot.data!.docs;
                     return SingleChildScrollView(
                       child: Container(
-                        height: screenHeight * 0.9,
+                        height: screenHeight * 0.675,
                         child: ListView.builder(
                             itemCount: nutrition.length,
                             itemBuilder: (cotext, index) {
@@ -127,8 +128,7 @@ class NutritionTrackerScreen extends StatelessWidget {
                                       width: double.infinity,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        color:
-                                            Color.fromARGB(255, 211, 212, 217),
+                                        color: containerColor,
                                       ),
                                       child: Column(
                                         crossAxisAlignment:
@@ -184,9 +184,9 @@ class NutritionTrackerScreen extends StatelessWidget {
                   }
                 },
               ),
-              //* ------------------------------------------------------------------------
-            ],
-          ),
+            ),
+            //* ------------------------------------------------------------------------
+          ],
         ),
       ),
     );

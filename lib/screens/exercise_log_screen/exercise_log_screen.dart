@@ -110,7 +110,7 @@ class ExerciseLogScreen extends StatelessWidget {
                     List<DocumentSnapshot> exercise_log = snapshot.data!.docs;
                     return SingleChildScrollView(
                       child: Container(
-                        height: screenHeight * 0.9,
+                        height: screenHeight * 0.675,
                         child: ListView.builder(
                             itemCount: exercise_log.length,
                             itemBuilder: (cotext, index) {
@@ -129,8 +129,7 @@ class ExerciseLogScreen extends StatelessWidget {
                                       width: double.infinity,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        color:
-                                            Color.fromARGB(255, 211, 212, 217),
+                                        color: containerColor,
                                       ),
                                       child: Column(
                                         crossAxisAlignment:

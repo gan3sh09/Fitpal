@@ -1,3 +1,4 @@
+import 'package:fitpal/constants/colors.dart';
 import 'package:fitpal/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart';
@@ -19,9 +20,16 @@ void setGoal(BuildContext context, TextEditingController dateController,
   await DatabaseMethods().setGoalInfo(goalInfoMap, id).then((value) {
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        backgroundColor: Colors.green,
-        content: Text('Exercise log Info Added Successfully'),
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        backgroundColor: primaryColor,
+        content: const Text(
+          'Setting goal successfully!',
+          style: TextStyle(color: whiteColor),
+        ),
       ),
     );
     dateController.text = "";
